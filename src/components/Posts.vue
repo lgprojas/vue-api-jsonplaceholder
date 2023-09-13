@@ -9,7 +9,7 @@
                 <div class="card-body">
                 <div class="card-title h6" style="text-align: justify; height: 45px;">{{ post.title }}</div>
                 <p className="card-text" style="text-align: justify;">{{ Truncate(post.content,100,100) }}</p>
-                <p class="card-text"><small className="text-muted">Publicado {{ post.publishedAt }}</small></p>
+                <p class="card-text"><small className="text-muted">Publicado {{ Days(post.publishedAt) }}</small></p>
                 </div>
             </div>
             </div>
@@ -19,6 +19,7 @@
 
 <script>
 import { Truncate } from '../helpers/Truncate';
+import { Days } from '../helpers/Days';
 
 export default {
   name: 'Posts',
@@ -26,7 +27,8 @@ export default {
     posts: []
   },
   methods: {
-    Truncate
+    Truncate,
+    Days
   }
 }
 </script>
