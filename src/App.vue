@@ -1,9 +1,10 @@
 <template>
-
   <div className="container p-2">
     <div class='h2'>Lista de posts:</div>
-    <Posts :posts="posts"/>
-    <Pagination />
+      <Posts :posts="paginatedPosts"/>
+    <div class="col-lg-12 d-flex justify-content-center">
+      <Pagination :postsPerPage="postsPerPage" :totalPosts="posts.length" v-on:paginate="fnpaginate"/>
+    </div>
   </div>
 </template>
 
@@ -19,21 +20,46 @@ export default {
   },
   data(){
     return{
-      posts: []
+      posts: [],
+      currentPage: 1,
+      postsPerPage: 10,
+      indexOfLastPost: 0,
+      indexOfFirstPost: 0,
+      currentPosts: [],
+      paginate: 0,
     }
   },
   created(){
-      
-      const getPosts = async () => { 
+    this.getPosts()
+  },
+  methods:{
+      async getPosts () { 
         await fetch('https://jsonplaceholder.org/posts', { method: "get"})
         .then(response => response.json())
         .then(data => {
           this.posts = data;
         })
-      }
+      },
 
-      getPosts();
+      fnpaginate (pageNumber){
+        //alert(pageNumber)
+        this.currentPage = pageNumber
+      },
+
     },
+    computed: {
+      paginatedPosts: function(){
+        this.indexOfLastPost = this.currentPage * this.postsPerPage; //1*10=10      
+        this.indexOfFirstPost = this.indexOfLastPost - this.postsPerPage;//10-10=0      
+        return this.posts.slice(this.indexOfFirstPost, this.indexOfLastPost);//paginas de 0 a 10
+      }
+    },
+    mounted(){
+
+        
+        
+    },
+
 }
 </script>
 

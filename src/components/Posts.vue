@@ -24,7 +24,7 @@ import { Days } from '../helpers/Days';
 export default {
   name: 'Posts',
   props: {
-    posts: []
+    posts: Array
   },
   methods: {
     Truncate,
